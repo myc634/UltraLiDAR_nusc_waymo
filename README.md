@@ -35,7 +35,7 @@ git checkout v1.0.0rc1 # Other versions may not be compatible.
 pip install -v -e .
 pip install -r requirements.txt
 ```
-**g. Clone UltraLIDAR.**
+**e. Clone UltraLIDAR.**
 ```
 git clone git@github.com:myc634/UltraLiDAR_nusc_waymo.git
 ```
