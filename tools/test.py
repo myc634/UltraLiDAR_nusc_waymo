@@ -11,7 +11,8 @@ from mmcv.runner import (get_dist_info, init_dist, load_checkpoint,
                          wrap_fp16_model)
 
 from mmdet3d.apis import single_gpu_test
-from mmdet3d.datasets import build_dataloader, build_dataset
+from mmdet3d.datasets import build_dataset
+from plugin.datasets.builder import build_dataloader
 from mmdet3d.models import build_model
 from mmdet_test import multi_gpu_test
 from mmdet_train import set_random_seed
@@ -200,7 +201,7 @@ def main():
         cfg.work_dir = osp.join('./work_dirs',
                                 osp.splitext(osp.basename(args.config))[0]) 
     # breakpoint()
-    if cfg.data.test.type != 'Kitti360Dataset' and cfg.data.test.type != 'CWaymoDataset':
+    if cfg.data.test.type != 'Kitti360Dataset' and cfg.data.test.type != 'WaymoDataset':
         cfg.data.test.work_dir = cfg.work_dir
     print('work_dir: ',cfg.work_dir)
     dataset = build_dataset(cfg.data.test)
@@ -242,7 +243,34 @@ def main():
             broadcast_buffers=False)
         outputs = multi_gpu_test(model, data_loader, args.tmpdir,
                                  args.gpu_collect)
-    print("finish dumping data")
+    # breakpoint()
+    rank, _ = get_dist_info()
+    if rank == 0:
+        if args.out:
+            print(f'\nwriting results to {args.out}')
+            mmcv.dump(outputs, args.out)
+        kwargs = {} if args.eval_options is None else args.eval_options
+        if args.format_only:
+            dataset.format_results(outputs, **kwargs)
+        if args.eval:
+            eval_kwargs = cfg.get('evaluation', {}).copy()
+            # hard-code way to remove EvalHook args
+            for key in [
+                    'interval', 'tmpdir', 'start', 'gpu_collect', 'save_best',
+                    'rule'
+            ]:
+                eval_kwargs.pop(key, None)
+            # eval_kwargs.update(dict(metric=args.eval, **kwargs))
+            # breakpoint()
+            print('start evaluation!')
+            import time
+            st = time.time()
+            if cfg.model.model_type == 'unconditional_generation' or cfg.model.model_type == 'conditional_generation':
+                print(dataset.uncondition_eval(outputs))
+            et = time.time()
+            print(et - st)
+            # print(dataset.evaluate(outputs, output_format=str(args.eval[0]), **eval_kwargs))
+
 
 if __name__ == '__main__':
     main()

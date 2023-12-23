@@ -123,17 +123,18 @@ class UltraLiDAR(CenterPoint):
         self.pre_quant = nn.Sequential(nn.Linear(1024, 1024), nn.LayerNorm(1024))
         self.lidar_encoder = build_transformer_layer_sequence(lidar_encoder)
         self.lidar_decoder = build_transformer_layer_sequence(lidar_decoder)
-        # breakpoint()
+
         if self.model_type != "codebook_training":
             for p in self.parameters():
                 p.requires_grad = False
             self.maskgit_transformer = build_transformer_layer_sequence(maskgit_transformer)
+            self.BLANK_CODE = mmcv.load("blank_code.pkl")
 
         del self.pts_bbox_head
         self.iter = 0
         self.T = 30
         
-        self.BLANK_CODE = mmcv.load("blank_code.pkl")
+        
         self.counter = Counter()
         self.register_buffer("code_age", torch.zeros(self.vector_quantizer.n_e) * 10000)
         self.register_buffer("code_usage", torch.zeros(self.vector_quantizer.n_e))

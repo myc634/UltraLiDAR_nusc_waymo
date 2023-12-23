@@ -14,7 +14,7 @@ from os import path as osp
 
 from mmdet import __version__ as mmdet_version
 from mmdet3d import __version__ as mmdet3d_version
-from mmdet3d.apis import train_model
+# from mmdet3d.apis import train_model
 from mmdet3d.datasets import build_dataset
 from mmdet3d.utils import collect_env, get_root_logger
 from mmseg import __version__ as mmseg_version
@@ -262,7 +262,8 @@ def main():
         # palette for visualization in segmentation tasks
         if 'PALETTE' in checkpoint.get('meta', {}):
             model.PALETTE = checkpoint['meta']['PALETTE']
-    train_model(
+    from mmdet_train import train_detector
+    train_detector(
         model,
         datasets,
         cfg,
@@ -273,5 +274,4 @@ def main():
 
 
 if __name__ == '__main__':
-    # torch.multiprocessing.set_start_method('fork')
     main()

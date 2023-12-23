@@ -39,7 +39,7 @@ def parse_args():
     args = parser.parse_args()
     return args
 
-def create_nuscenes_infos(root_path,
+def create_nuscenes_infos(root_path='/datasets/nuScenes',
                             dest_path=None,
                             info_prefix='nuscenes',
                             version='v1.0-trainval',):

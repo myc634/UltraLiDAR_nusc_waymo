@@ -33,12 +33,14 @@ git clone https://github.com/open-mmlab/mmdetection3d.git
 cd mmdetection3d
 git checkout v1.0.0rc1 # Other versions may not be compatible.
 pip install -v -e .
-pip install -r requirements.txt
 ```
 **e. Clone UltraLIDAR.**
 ```
 git clone git@github.com:myc634/UltraLiDAR_nusc_waymo.git
+cd UltraLiDAR_nusc_waymo
+pip install -r requirements.txt
 ```
+
 
 ## Preparing Dataset
 
@@ -55,9 +57,17 @@ UltraLiDAR_nusc_waymo
 
 For Kitti360 dataset, please run
 ```
-python  tools/data_converter/kitti360_converter.py
+python tools/data_converter/kitti360_converter.py
+```
+
+For nuScenes dataset, please run
+```
+python tools/data_converter/nuscenes_converter.py --data-root datasets/nuScenes/
 ```
 to generate the `pkl` file which fits the MMDetection3D framework.
+
+For Waymo Open Dataset, please run: `cd mmdetection3d` and follow the official instruction of [MMDetection3D Data Preparation pipeline](https://mmdetection3d.readthedocs.io/en/v1.0.0rc0/data_preparation.html) to convert waymo format into kitti format for training
+
 
 ## Training
 
