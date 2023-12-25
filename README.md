@@ -21,7 +21,7 @@ pip install torch==1.10.0+cu113 torchvision==0.11.1+cu113 torchaudio==0.10.0+cu1
 **c. Install mmcv-full, mmdet and mmseg.**
 ```shell
 pip3 install openmim
-mim install mmcv-full==1.6.0
+mim install mmcv-full==1.5.0
 mim install mmdet==2.28.2
 mim install mmsegmentation==0.30.0
 ```
