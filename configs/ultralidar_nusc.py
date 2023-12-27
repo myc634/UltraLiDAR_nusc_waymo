@@ -1,7 +1,7 @@
 
 model_type = "codebook_training"
 _base_ = ["./_base_/default_runtime.py"]
-batch_size = 1
+batch_size = 2
 # Global
 # If point cloud range is changed, the models should also change their point
 # cloud range accordingly
@@ -150,7 +150,7 @@ data = dict(
     train=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file=data_root + 'nuscenes_infos_train.pkl',
+        ann_file=data_root + 'nuscenes_mapandbbox_infos_train.pkl',
         pipeline=train_pipeline,
         classes=class_names,
         modality=input_modality,

@@ -4,7 +4,7 @@ model_type = "transformer_training"
 # model_type = "unconditional_generation"
 # If you want training, switch model_type to unconditional_generation or conditional_generation
 _base_ = ["./_base_/default_runtime.py"]
-batch_size = 3
+batch_size = 2
 # Global
 # If point cloud range is changed, the models should also change their point
 # cloud range accordingly

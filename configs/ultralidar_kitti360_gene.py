@@ -150,7 +150,7 @@ share_data_config = dict(
 )
 
 data = dict(
-    samples_per_gpu=1,
+    samples_per_gpu=2,
     workers_per_gpu=8,
     train=dict(
         type=dataset_type,
@@ -183,7 +183,7 @@ data = dict(
 
 optimizer = dict(
     type='AdamW',
-    lr=0.00024,
+    lr=8e-4,
     betas=(0.9, 0.95),  # the momentum is change during training
     paramwise_cfg=dict(
         custom_keys={'absolute_pos_embed': dict(decay_mult=0.),

@@ -78,7 +78,7 @@ numba==0.53.0
 numpy==1.23.5
 nuscenes-devkit==1.1.11
 oauthlib==3.2.2
-open3d==0.17.0
+open3d-python
 opencv-python==4.8.1.78
 opendatalab==0.0.10
 openmim==0.3.9
