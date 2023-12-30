@@ -128,7 +128,7 @@ class UltraLiDAR(CenterPoint):
             for p in self.parameters():
                 p.requires_grad = False
             self.maskgit_transformer = build_transformer_layer_sequence(maskgit_transformer)
-            self.BLANK_CODE = mmcv.load("blank_code.pkl")
+            
 
         del self.pts_bbox_head
         self.iter = 0
@@ -433,6 +433,7 @@ class UltraLiDAR(CenterPoint):
         if self.model_type == 'static_blank_code':
             self.static_blank_code()
         else:
+            self.BLANK_CODE = mmcv.load("blank_code.pkl")
             gt_points, generated_points = self.unconditional_generation(points)
         
 

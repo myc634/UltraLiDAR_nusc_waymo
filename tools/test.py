@@ -9,10 +9,10 @@ from mmcv.cnn import fuse_conv_bn
 from mmcv.parallel import MMDataParallel, MMDistributedDataParallel
 from mmcv.runner import (get_dist_info, init_dist, load_checkpoint,
                          wrap_fp16_model)
-
+from mmdet.datasets import build_dataloader
 from mmdet3d.apis import single_gpu_test
 from mmdet3d.datasets import build_dataset
-from plugin.datasets.builder import build_dataloader
+
 from mmdet3d.models import build_model
 from mmdet_test import multi_gpu_test
 from mmdet_train import set_random_seed
